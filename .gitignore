@@ -11,6 +11,8 @@
 # Ignore operating system files
 .DS_Store
 Thumbs.db
+dumps
+expr
 
 # Ignore log files
 *.log

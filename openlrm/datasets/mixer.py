@@ -44,6 +44,9 @@ class MixerDataset(torch.utils.data.Dataset):
         if name == "objaverse":
             from .objaverse import ObjaverseDataset
             dataset_cls = ObjaverseDataset
+        elif name == "multiview":
+            from .multiview import MultiViewDataset
+            dataset_cls = MultiViewDataset
         # elif name == 'mvimgnet':
         #     from .mvimgnet import MVImgNetDataset
         #     dataset_cls = MVImgNetDataset

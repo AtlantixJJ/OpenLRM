@@ -205,11 +205,12 @@ class Trainer(Runner):
 
     def load_model_(self, cfg):
         logger.info(f"======== Loading model from {cfg.saver.load_model} ========")
-        safetensors.torch.load_model(
-            self.accelerator.unwrap_model(self.model),
-            cfg.saver.load_model,
-            strict=True,
-        )
+        if cfg.saver.load_model.endswith('.safetensors'):
+            safetensors.torch.load_model(
+                self.accelerator.unwrap_model(self.model),
+                cfg.saver.load_model,
+                strict=True,
+            )
         logger.info(f"======== Model loaded ========")
 
     @control(synchronized=True)

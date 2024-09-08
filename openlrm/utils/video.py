@@ -16,6 +16,7 @@
 import os
 import numpy as np
 import imageio
+from moviepy.editor import ImageSequenceClip
 
 
 def images_to_video(images, output_path, fps, gradio_codec: bool, verbose=False):
@@ -29,11 +30,18 @@ def images_to_video(images, output_path, fps, gradio_codec: bool, verbose=False)
         assert frame.min() >= 0 and frame.max() <= 255, \
             f"Frame value out of range: {frame.min()} ~ {frame.max()}"
         frames.append(frame)
-    frames = np.stack(frames)
-    if gradio_codec:
-        imageio.mimwrite(output_path, frames, fps=fps, quality=10)
-    else:
-        imageio.mimwrite(output_path, frames, fps=fps, codec='mpeg4', quality=10)
+
+    clip = ImageSequenceClip(frames, fps=fps)
+    clip.write_videofile(output_path,
+        codec='libx264', fps=fps,
+        preset='ultrafast', threads=1)
+
+    #frames = np.stack(frames)
+    #if gradio_codec:
+    #    imageio.mimwrite(output_path, frames, fps=fps, quality=10)
+    #else:
+    #    imageio.mimwrite(output_path, frames, fps=fps, codec='mpeg4', quality=10)
+
     if verbose:
         print(f"Using gradio codec option {gradio_codec}")
         print(f"Saved video to {output_path}")

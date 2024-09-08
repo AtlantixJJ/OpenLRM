@@ -47,6 +47,7 @@ class DinoWrapper(nn.Module):
 
     def _freeze(self):
         logger.warning(f"======== Freezing DinoWrapper ========")
+        print("======== Freezing DinoWrapper ========")
         self.model.eval()
         for name, param in self.model.named_parameters():
             param.requires_grad = False

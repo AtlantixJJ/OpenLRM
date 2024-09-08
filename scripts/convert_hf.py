@@ -79,7 +79,7 @@ if __name__ == '__main__':
     hf_model = hf_model_cls(OmegaConf.to_container(cfg.model))
     loaded_step = auto_load_model(cfg, hf_model)
     dump_path = smart_path_join(
-        f"./exps/releases",
+        f"expr/releases",
         cfg.experiment.parent, cfg.experiment.child,
         f'step_{loaded_step:06d}',
     )

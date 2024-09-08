@@ -24,6 +24,7 @@ from accelerate.logging import get_logger
 from .base_trainer import Trainer
 from openlrm.utils.profiler import DummyProfiler
 from openlrm.runners import REGISTRY_RUNNERS
+from openlrm.utils.hf_hub import wrap_model_hub
 
 
 logger = get_logger(__name__)
@@ -44,7 +45,12 @@ class LRMTrainer(Trainer):
         assert cfg.experiment.type == 'lrm', \
             f"Config type {cfg.experiment.type} does not match with runner {self.__class__.__name__}"
         from openlrm.models import ModelLRM
-        model = ModelLRM(**cfg.model)
+        #model = ModelLRM(**cfg.model)
+        model_class = wrap_model_hub(ModelLRM)
+        model = model_class.from_pretrained(cfg.experiment.pretrained)
+        if cfg.model.encoder_freeze:
+            model.encoder._freeze()
+    
         return model
 
     def _build_optimizer(self, model: nn.Module, cfg):
@@ -269,7 +275,7 @@ class LRMTrainer(Trainer):
                 if self.global_step % self.cfg.val.global_step_period == 0:
                     self.evaluate()
                     self.model.train()
-                if self.global_step % self.cfg.logger.image_monitor.train_global_steps == 0:
+                if self.global_step % self.cfg.logger.image_monitor.train_global_steps == 0 or self.global_step == 1:
                     self.log_image_monitor(
                         step=self.global_step, split='train',
                         renders=outs['images_rgb'].detach()[:self.cfg.logger.image_monitor.samples_per_log].cpu(),

@@ -273,7 +273,7 @@ class LRMInferrer(Inferrer):
             dump_video_path = os.path.join(
                 self.cfg.video_dump,
                 subdir_path,
-                f'{uid}.mov',
+                f'{uid}.mp4',
             )
             dump_mesh_path = os.path.join(
                 self.cfg.mesh_dump,

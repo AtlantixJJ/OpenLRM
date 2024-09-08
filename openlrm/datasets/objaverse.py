@@ -60,7 +60,7 @@ class ObjaverseDataset(BaseDataset):
         """
         uid = self.uids[idx]
         root_dir = self._locate_datadir(self.root_dirs, uid, locator="intrinsics.npy")
-        
+
         pose_dir = os.path.join(root_dir, uid, 'pose')
         rgba_dir = os.path.join(root_dir, uid, 'rgba')
         intrinsics_path = os.path.join(root_dir, uid, 'intrinsics.npy')
