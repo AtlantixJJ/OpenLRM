@@ -2,8 +2,8 @@
 experiment:
     type: lrm
     seed: 42
-    parent: lrm-objaverse
-    child: small-dummyrun
+    parent: lrm-panohoead
+    child: small
     pretrained: zxhezexin/openlrm-obj-small-1.1
 
 model:

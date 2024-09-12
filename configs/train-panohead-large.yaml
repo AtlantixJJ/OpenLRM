@@ -2,7 +2,7 @@
 experiment:
     type: lrm
     seed: 42
-    parent: lrm-objaverse
+    parent: lrm-panohead
     child: large
     pretrained: zxhezexin/openlrm-mix-large-1.1
 
@@ -63,7 +63,7 @@ train:
     debug_global_steps: null
 
 val:
-    batch_size: 4
+    batch_size: 2
     global_step_period: 1000
     debug_batches: null
 
